@@ -105,6 +105,10 @@ class Finder
     {
         // Get real fixtures path
         foreach ($fixtures as $index => $fixture) {
+            if ($fixture instanceof SplFileInfo) {
+                continue;
+            }
+
             if ('@' === $fixture[0]) {
                 $fixtures[$index] = $kernel->locateResource($fixture);
             } else {

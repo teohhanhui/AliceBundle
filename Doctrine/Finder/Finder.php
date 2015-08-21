@@ -72,10 +72,8 @@ class Finder extends \Hautelook\AliceBundle\Finder\Finder
             $sourceFile = $reflectionClass->getFileName();
 
             if (true === isset($phpClasses[$sourceFile])) {
-                $doctrineFixture = new $className;
-                
-                if ($doctrineFixture instanceof LoaderInterface) {
-                    $loaders[] = $doctrineFixture;
+                if ($reflectionClass->implementsInterface('Hautelook\AliceBundle\Doctrine\DataFixtures\LoaderInterface')) {
+                    $loaders[] = new $className;
                 }
             }
         }

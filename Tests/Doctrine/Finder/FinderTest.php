@@ -260,6 +260,18 @@ class FinderTest extends \PHPUnit_Framework_TestCase
             ]
         ];
 
+        $return[] = [
+            [
+                new TestCBundle(),
+            ],
+            'EEnv',
+            [
+                '/home/travis/build/theofidry/AliceBundle/Tests/SymfonyApp/TestBundle/Bundle/ABundle/DataFixtures/ORM/aentity.yml',
+                '/home/travis/build/theofidry/AliceBundle/Tests/SymfonyApp/TestBundle/Bundle/BBundle/DataFixtures/ORM/bentity.yml',
+                '/home/travis/build/theofidry/AliceBundle/Tests/SymfonyApp/TestBundle/Bundle/CBundle/DataFixtures/ORM/EEnv/empty.yml',
+            ]
+        ];
+
         // Fix paths
         foreach ($return as $index => $dataSet) {
             foreach ($dataSet[2] as $dataSetIndex => $filePath) {

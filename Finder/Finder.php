@@ -96,8 +96,8 @@ class Finder
     /**
      * Gets the real path of each fixtures.
      *
-     * @param KernelInterface        $kernel
-     * @param string[]|SplFileInfo[] $fixtures
+     * @param KernelInterface         $kernel
+     * @param string[]|\SplFileInfo[] $fixtures
      *
      * @return string[] Fixtures real path
      * @throws \InvalidArgumentException File not found.
@@ -108,15 +108,26 @@ class Finder
 
         // Get real fixtures path
         foreach ($fixtures as $index => $fixture) {
-            if ($fixture instanceof SplFileInfo) {
-                $resolvedFixtures[$fixture->getRealPath()] = true;
+            if ($fixture instanceof \SplFileInfo) {
+                $filePath = $fixture->getRealPath();
+
+                if (false === $filePath) {
+                    throw new \InvalidArgumentException(
+                        sprintf(
+                            'The file %s pointed by a %s instance was not found.',
+                            (string)$fixture,
+                            get_class($fixture)
+                        )
+                    );
+                }
+                $resolvedFixtures[$filePath] = true;
 
                 continue;
             }
 
             if (false === is_string($fixture)) {
                 throw new \InvalidArgumentException(
-                    'Expected fixtures passed to be either strings or a Symfony\Component\Finder\SplFileInfo instances.'
+                    'Expected fixtures passed to be either strings or a SplFileInfo instances.'
                 );
             }
 
